@@ -80,3 +80,34 @@ Veritabanını yönetmek, düzenlemek ve analizler için:
 
 ```bash
 mergen --ui
+
+Canlı Arama: Regex destekli anlık filtreleme.
+
+    Düzenleme: Komutlara veya açıklamalara çift tıklayarak içeriği değiştirin.
+
+    Sıralama: ID, Kullanım Sayısı veya Tarih başlıklarına tıklayarak sıralama yapın.
+
+    Profilim: "🧠 Profilim" butonuna tıklayarak yapay zekanın sizi analiz etmesini sağlayın.
+
+    Veri Yönetimi: Sağ üstteki butonlarla verilerinizi JSON formatında yedekleyin veya geri yükleyin.
+
+3. Otomatik Takip
+
+Kurulumdan sonra hiçbir şey yapmanıza gerek yok. Terminalde çalıştırdığınız araçlar (nmap, sqlmap, burpsuite, ssh vb.) otomatik olarak yakalanır ve "Shell Geçmişi" kategorisine kaydedilir.
+🛠️ Teknoloji Yığını
+
+    Core: Python 3
+
+    Database: SQLite3 (Otomatik Migrasyonlu)
+
+    AI Model: Google Gemini 3 Flash
+
+    GUI: PyQt6 (Qt Framework)
+
+    Shell Integration: Zsh / Bash / Fish Hooks (Native implementation)
+
+⚠️ Yasal Uyarı
+
+Bu araç, siber güvenlik profesyonellerine ve öğrencilerine yardımcı olmak, operasyonel verimliliği artırmak amacıyla geliştirilmiştir. Oluşturulan komutların (özellikle sistem dosyalarını etkileyenlerin) çalıştırılmadan önce kontrol edilmesi kullanıcının sorumluluğundadır. Geliştirici, aracın kullanımından doğabilecek veri kayıplarından sorumlu değildir.
+
+Lisans: MIT License
