@@ -72,3 +72,11 @@ Bir komuta ihtiyacınız olduğunda arayüzü açmanıza gerek yok:
 
 ```bash
 mergen "tüm docker containerları sil ama volume'ler kalsın"
+**Çıktı:** Komutu, risk analizini ve açıklamayı terminale renkli olarak basar ve veritabanına kaydeder.
+
+### 2. Grafik Arayüz (GUI)
+
+Veritabanını yönetmek, düzenlemek ve analizler için:
+
+```bash
+mergen --ui
