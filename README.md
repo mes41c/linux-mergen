@@ -45,7 +45,7 @@ Mergen, kurulumu ve sistem entegrasyonunu otomatize eden akıllı bir sihirbaz i
 
 1.  **Depoyu Klonlayın:**
     ```bash
-    git clone [https://github.com/KULLANICI_ADIN/mergen.git](https://github.com/KULLANICI_ADIN/mergen.git)
+    git clone https://github.com/mes41c/linux-mergen.git
     cd mergen
     ```
 
