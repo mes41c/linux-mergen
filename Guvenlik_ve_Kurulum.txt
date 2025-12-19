@@ -1,0 +1,60 @@
+MERGEN - SİBER OPERASYON ASİSTANI
+Sürüm: v4.7 (Final Release)
+================================================================================
+
+[ÖN HAZIRLIK] API ANAHTARI ALINMASI
+Mergen'in yapay zeka özelliklerini kullanabilmek için Google'dan ücretsiz bir 
+API anahtarına ihtiyacınız var.
+
+1. Şu adrese gidin: https://aistudio.google.com/app/apikey
+2. "Create API Key" butonuna tıklayın.
+3. Oluşturulan anahtarı (örn: AIzaSy...) kopyalayın.
+
+--------------------------------------------------------------------------------
+
+[1] HIZLI KURULUM
+Terminalde "mergen.py" dosyasının bulunduğu dizine gelin ve şu komutu çalıştırın:
+
+    python3 mergen.py --setup
+
+Sihirbaz sizi yönlendirecektir:
+  > Gerekli kütüphaneleri (google-genai, PyQt6) otomatik kurar.
+  > API Anahtarınızı sorar ve sisteme kaydeder.
+  > 'mergen' komutunu terminale entegre eder.
+
+*Kurulum bitince terminali kapatıp yeniden açın.*
+
+--------------------------------------------------------------------------------
+
+[2] KULLANIM KILAVUZU
+
+A. AI SORGULAMA (CLI & GUI)
+   - Terminalden hızlı soru sormak için:
+     $ mergen "port 80'i kullanan servisi nasıl bulurum?"
+   
+   - Grafik arayüzü (GUI) açmak için:
+     $ mergen --ui
+
+B. VERİ YÖNETİMİ
+   - Yedek Alma: Arayüzdeki "Yedekle" butonu veya:
+     $ mergen --export-file yedek.json
+   
+   - Yedek Yükleme: Arayüzdeki "İçe Aktar" butonu veya:
+     $ mergen --import-file yedek.json
+
+C. OTOMATİK TAKİP (OBSERVER MODE)
+   - Mergen, terminalde yazdığınız komutları (örn: nmap, sqlmap) otomatik olarak 
+     arka planda kaydeder ve kategorize eder.
+   - Bu özellik kurulumla birlikte otomatik aktif olur.
+
+--------------------------------------------------------------------------------
+
+[3] GÜVENLİK BİLDİRİMİ
+   - Tüm veriler SADECE kendi bilgisayarınızda yerel olarak saklanır.
+   - Yapay zeka sorgularında IP, Şifre, API Key gibi hassas veriler maskelenir.
+   - Sisteminizden dışarıya (Google API hariç) veri çıkışı olmaz.
+
+================================================================================
+İyi Operasyonlar.
+--------------------------------------------------------------------------------
+İLETİŞİM: [Emir Sakın/https://www.linkedin.com/in/mes-41c]
