@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-MERGEN v5.1 - Thread Safe Edition
+MERGEN v5.2 - Thread Safe Edition
 Özellikler: Çoklu Thread Desteği, Profil Analizi, Güvenli DB Bağlantısı
 """
 
