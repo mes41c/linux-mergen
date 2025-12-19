@@ -80,6 +80,7 @@ Veritabanını yönetmek, düzenlemek ve analizler için:
 
 ```bash
 mergen --ui
+```
 
 Canlı Arama: Regex destekli anlık filtreleme.
 
