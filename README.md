@@ -84,17 +84,18 @@ mergen --ui
 
 Canlı Arama: Regex destekli anlık filtreleme.
 
-    Düzenleme: Komutlara veya açıklamalara çift tıklayarak içeriği değiştirin.
+Düzenleme: Komutlara veya açıklamalara çift tıklayarak içeriği değiştirin.
 
-    Sıralama: ID, Kullanım Sayısı veya Tarih başlıklarına tıklayarak sıralama yapın.
+Sıralama: ID, Kullanım Sayısı veya Tarih başlıklarına tıklayarak sıralama yapın.
 
-    Profilim: "🧠 Profilim" butonuna tıklayarak yapay zekanın sizi analiz etmesini sağlayın.
+Profilim: "🧠 Profilim" butonuna tıklayarak yapay zekanın sizi analiz etmesini sağlayın.
 
-    Veri Yönetimi: Sağ üstteki butonlarla verilerinizi JSON formatında yedekleyin veya geri yükleyin.
+Veri Yönetimi: Sağ üstteki butonlarla verilerinizi JSON formatında yedekleyin veya geri yükleyin.
 
 3. Otomatik Takip
 
 Kurulumdan sonra hiçbir şey yapmanıza gerek yok. Terminalde çalıştırdığınız araçlar (nmap, sqlmap, burpsuite, ssh vb.) otomatik olarak yakalanır ve "Shell Geçmişi" kategorisine kaydedilir.
+
 🛠️ Teknoloji Yığını
 
     Core: Python 3
