@@ -1,0 +1,94 @@
+MERGEN - DECENTRALIZED CYBER OPERATIONS CONSOLE
+Version: v7.0 (Secure Edition)
+================================================================================
+
+[PREREQUISITES] REQUIREMENTS
+Mergen is a hybrid system running between your computer (Linux) and your phone 
+(Android). For full capacity usage, you will need:
+
+1. Google Gemini API Key (Optional - For AI Analysis):
+   Go to https://aistudio.google.com/app/apikey and click "Create API Key".
+2. Syncthing: To sync the database between two devices.
+3. Tailscale (Optional): For remote access (SSH).
+
+--------------------------------------------------------------------------------
+
+[1] INSTALLATION (STEP BY STEP)
+
+A. HOST MACHINE (KALI/UBUNTU)
+   Navigate to the directory containing "mergen.py" in the terminal:
+   
+   $ python3 mergen.py --setup
+
+   The wizard will guide you:
+   > Database Location: Select your Syncthing folder (e.g., ~/Sync/mergen.db).
+   > API Key: The entered key is stored encrypted.
+   > Privacy Setting: Choose to enable or disable AI analysis.
+
+B. MOBILE FIELD UNIT (ANDROID / TERMUX)
+   Turn your phone into a Cyber Operations Device (Cyberdeck).
+   
+   1. Open Termux and install the necessary packages:
+      $ pkg install python rust binutils build-essential clang
+      $ pip install google-genai
+   
+   2. Navigate to your Syncthing folder and start the setup:
+      $ cd /storage/emulated/0/Download/Mergen (Your specific path)
+      $ python mergen.py --setup
+   
+   3. Paste this command AT ONCE to bypass Android restrictions:
+      $ echo 'python /storage/emulated/0/Download/Mergen/mergen.py "$@"' > $PREFIX/bin/mergen && chmod +x $PREFIX/bin/mergen
+
+--------------------------------------------------------------------------------
+
+[2] USER MANUAL
+
+A. GRAPHICAL INTERFACE (GUI) - DESKTOP
+   $ mergen --ui
+
+   > 📜 Import History: Select .zsh_history files from your pentest machines 
+     to perform bulk analysis and process them into the database.
+   > 🤖 AI Toggle: Use the checkbox in the top menu to completely disable AI
+     and switch to "Offline" mode.
+   > My Profile: AI-backed career analysis based on your command usage habits.
+
+B. TERMINAL INTERFACE (TUI) - MOBILE & SSH
+   $ mergen --tui
+
+   > Keyboard-focused interface with "Hacker" aesthetic.
+   > Use the [/] key to perform Regex-supported searches.
+   > Your data syncs instantly with your computer via Syncthing.
+
+C. QUICK COMMAND LINE (CLI)
+   $ mergen "how to perform an aggressive but silent nmap scan?"
+   > Ask in natural language, and Mergen gives you the executable command.
+
+--------------------------------------------------------------------------------
+
+[3] SECURITY AND PRIVACY (OPSEC)
+
+1. SECURITY SHIELD v2.0
+   - Mergen automatically masks Passwords (API_KEY=...) and IP Addresses
+     (192.168.x.x) as (<GIZLI_IP_0>) before saving to the database.
+   - This ensures no sensitive data leaks in screenshots or logs.
+
+2. XSS & MEMORY PROTECTION
+   - All inputs are filtered against HTML Injection attacks.
+   - Large history files are processed line-by-line without bloating RAM.
+
+3. ULTRA PRIVACY MODE
+   - The AI module can be disabled during setup or via the GUI.
+   - In this mode, not a single byte of data is sent to Google servers.
+
+--------------------------------------------------------------------------------
+
+[4] SYSTEM ARCHITECTURE
+   - Decentralized: No central server. Your data is moved between devices via
+     Syncthing with P2P encryption.
+   - Hybrid Execution: Even when your computer is off, you can work on the local
+     database using your phone's processor.
+
+================================================================================
+"Code is Poetry, Security is Art."
+--------------------------------------------------------------------------------
+DEVELOPER: [Emir Sakın | https://www.linkedin.com/in/mes-41c]
