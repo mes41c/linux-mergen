@@ -48,7 +48,7 @@ graph TD
 Bash
 
 # Clone the repository
-git clone https://github.com/username/mergen.git
+git clone https://github.com/mes41c/mergen.git
 cd mergen
 
 # Start the installation wizard
