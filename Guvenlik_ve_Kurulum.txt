@@ -1,60 +1,94 @@
-MERGEN - SİBER OPERASYON ASİSTANI
-Sürüm: v4.7 (Final Release)
+MERGEN - MERKEZİYETSİZ SİBER OPERASYON KONSOLU
+Sürüm: v7.0 (Secure Edition)
 ================================================================================
 
-[ÖN HAZIRLIK] API ANAHTARI ALINMASI
-Mergen'in yapay zeka özelliklerini kullanabilmek için Google'dan ücretsiz bir 
-API anahtarına ihtiyacınız var.
+[ÖN HAZIRLIK] GEREKSİNİMLER
+Mergen, bilgisayarınız (Linux) ve telefonunuz (Android) arasında çalışan hibrit
+bir sistemdir. Tam kapasite kullanım için şunlara ihtiyacınız olacak:
 
-1. Şu adrese gidin: https://aistudio.google.com/app/apikey
-2. "Create API Key" butonuna tıklayın.
-3. Oluşturulan anahtarı (örn: AIzaSy...) kopyalayın.
+1. Google Gemini API Key (Opsiyonel - AI Analizi için):
+   https://aistudio.google.com/app/apikey adresinden "Create API Key" deyin.
+2. Syncthing: İki cihaz arasında veritabanını eşitlemek için.
+3. Tailscale (Opsiyonel): Uzaktan erişim (SSH) için.
 
 --------------------------------------------------------------------------------
 
-[1] HIZLI KURULUM
-Terminalde "mergen.py" dosyasının bulunduğu dizine gelin ve şu komutu çalıştırın:
+[1] KURULUM (ADIM ADIM)
 
-    python3 mergen.py --setup
+A. ANA MAKİNE (KALI/UBUNTU)
+   Terminalde "mergen.py" dosyasının bulunduğu dizine gelin:
+   
+   $ python3 mergen.py --setup
 
-Sihirbaz sizi yönlendirecektir:
-  > Gerekli kütüphaneleri (google-genai, PyQt6) otomatik kurar.
-  > API Anahtarınızı sorar ve sisteme kaydeder.
-  > 'mergen' komutunu terminale entegre eder.
+   Sihirbaz sizi yönlendirecektir:
+   > Veritabanı Yeri: Syncthing klasörünü seçin (örn: ~/Sync/mergen.db).
+   > API Anahtarı: Girilen anahtar şifrelenerek saklanır.
+   > Gizlilik Ayarı: AI analizi açık/kapalı seçimi yaptırır.
 
-*Kurulum bitince terminali kapatıp yeniden açın.*
+B. MOBİL SAHA (ANDROID / TERMUX)
+   Telefonunuzu bir Siber Operasyon Cihazına (Cyberdeck) dönüştürün.
+   
+   1. Termux'u açın ve gerekli paketleri kurun:
+      $ pkg install python rust binutils build-essential clang
+      $ pip install google-genai
+   
+   2. Syncthing klasörünüze gidin ve kurulumu başlatın:
+      $ cd /storage/emulated/0/Download/Mergen (Kendi yolunuz)
+      $ python mergen.py --setup
+   
+   3. Android kısıtlamalarını aşmak için şu komutu TEK SEFERDE yapıştırın:
+      $ echo 'python /storage/emulated/0/Download/Mergen/mergen.py "$@"' > $PREFIX/bin/mergen && chmod +x $PREFIX/bin/mergen
 
 --------------------------------------------------------------------------------
 
 [2] KULLANIM KILAVUZU
 
-A. AI SORGULAMA (CLI & GUI)
-   - Terminalden hızlı soru sormak için:
-     $ mergen "port 80'i kullanan servisi nasıl bulurum?"
-   
-   - Grafik arayüzü (GUI) açmak için:
-     $ mergen --ui
+A. GRAFİK ARAYÜZ (GUI) - MASAÜSTÜ
+   $ mergen --ui
 
-B. VERİ YÖNETİMİ
-   - Yedek Alma: Arayüzdeki "Yedekle" butonu veya:
-     $ mergen --export-file yedek.json
-   
-   - Yedek Yükleme: Arayüzdeki "İçe Aktar" butonu veya:
-     $ mergen --import-file yedek.json
+   > 📜 Geçmiş Yükle: Sızma testi makinelerinizden .zsh_history dosyalarını
+     seçerek toplu analiz yapın ve veritabanına işleyin.
+   > 🤖 AI Toggle: Üst menüdeki kutucuk ile AI'yı tamamen kapatıp "Offline"
+     moda geçebilirsiniz.
+   > Profilim: Komut kullanım alışkanlıklarınıza göre AI destekli kariyer analizi.
 
-C. OTOMATİK TAKİP (OBSERVER MODE)
-   - Mergen, terminalde yazdığınız komutları (örn: nmap, sqlmap) otomatik olarak 
-     arka planda kaydeder ve kategorize eder.
-   - Bu özellik kurulumla birlikte otomatik aktif olur.
+B. TERMİNAL ARAYÜZÜ (TUI) - MOBİL & SSH
+   $ mergen --tui
+
+   > Klavye odaklı, "Hacker" estetiğine sahip arayüz.
+   > [/] tuşu ile Regex destekli arama yapın.
+   > Syncthing sayesinde verileriniz anında bilgisayarınızla eşleşir.
+
+C. HIZLI KOMUT SATIRI (CLI)
+   $ mergen "agresif ama sessiz nmap taraması nasıl yapılır?"
+   > Doğal dilde sorun, Mergen size çalıştırılabilir komutu versin.
 
 --------------------------------------------------------------------------------
 
-[3] GÜVENLİK BİLDİRİMİ
-   - Tüm veriler SADECE kendi bilgisayarınızda yerel olarak saklanır.
-   - Yapay zeka sorgularında IP, Şifre, API Key gibi hassas veriler maskelenir.
-   - Sisteminizden dışarıya (Google API hariç) veri çıkışı olmaz.
+[3] GÜVENLİK VE GİZLİLİK (OPSEC)
+
+1. GÜVENLİK KALKANI v2.0
+   - Mergen, veritabanına kayıt yapmadan önce Şifreleri (API_KEY=...) ve
+     IP Adreslerini (192.168.x.x) otomatik olarak maskeler (<GIZLI_IP_0>).
+   - Bu sayede ekran görüntülerinde veya loglarda hassas veri sızmaz.
+
+2. XSS & BELLEK KORUMASI
+   - HTML Injection saldırılarına karşı tüm girdiler filtrelenir.
+   - Büyük history dosyaları RAM'i şişirmeden, satır satır işlenir.
+
+3. ULTRA GİZLİLİK MODU
+   - Kurulumda veya GUI üzerinden AI modülü kapatılabilir.
+   - Bu modda Google sunucularına tek bir byte veri gönderilmez.
+
+--------------------------------------------------------------------------------
+
+[4] SİSTEM MİMARİSİ
+   - Decentralized: Merkezi sunucu yok. Verileriniz Syncthing ile P2P şifreli
+     olarak cihazlarınız arasında taşınır.
+   - Hybrid Execution: Bilgisayar kapalıyken bile telefonunuzun işlemcisini
+     kullanarak yerel veritabanında çalışabilirsiniz.
 
 ================================================================================
-İyi Operasyonlar.
+"Code is Poetry, Security is Art."
 --------------------------------------------------------------------------------
-İLETİŞİM: [Emir Sakın/https://www.linkedin.com/in/mes-41c]
+GELİŞTİRİCİ: [Emir Sakın | https://www.linkedin.com/in/mes-41c]
