@@ -253,10 +253,24 @@ class MergenVeritabani:
 
 class MergenZeka:
     def __init__(self):
-        self.api = AYARLAR["api_key"]; self.client = None
-        if self.api:
-            try: from google import genai; self.client = genai.Client(api_key=self.api)
-            except: pass
+        self.api = None
+        self.client = None
+        
+        # Eğer AI ayarlardan kapalıysa hiç kütüphane yüklemeye çalışma
+        if not AYARLAR.get("ai_aktif", True): return
+
+        # API Anahtarı var mı?
+        encrypted_key = AYARLAR.get("api_key")
+        if encrypted_key:
+            self.api = coz(encrypted_key)
+            try: 
+                # SESSİZ IMPORT: Hata verirse ekrana basma, sadece client'ı None yap
+                from google import genai
+                self.client = genai.Client(api_key=self.api)
+            except ImportError:
+                self.client = None # Kütüphane yoksa sessizce geç
+            except Exception:
+                self.client = None # Başka hata varsa sessizce geç
     def sor(self, s):
         if not AYARLAR.get("ai_aktif", True): return "AI_KAPALI" # <--- YENİ
         if not self.client: return "AI_DEVRE_DISI"
@@ -740,69 +754,86 @@ if GUI_AVAILABLE:
 
 # --- SETUP VE MAIN ---
 def setup_full():
-    print(f"{Renk.HEADER}=== MERGEN KURULUM SİHİRBAZI (v6.6) ==={Renk.ENDC}")
-    print("Bu sihirbaz gerekli kütüphaneleri kuracak ve ayarları yapılandıracaktır.")
+    print(f"{Renk.HEADER}=== MERGEN KURULUM SİHİRBAZI (v7.1) ==={Renk.ENDC}")
     
-    # 1. Kütüphaneler
-    print(f"\n{Renk.BLUE}[1/5] Kütüphane Kontrolü...{Renk.ENDC}")
-    subprocess.call([sys.executable, "-m", "pip", "install", "google-genai", "PyQt6", "--break-system-packages"])
+    # --- ADIM 0: PLATFORM TESPİTİ VE İZİN AYARI ---
+    is_termux = "com.termux" in os.environ.get("PREFIX", "")
+    platform_name = "Android (Termux)" if is_termux else "Linux (Desktop)"
+    print(f"{Renk.CYAN}➤ Sistem: {platform_name}{Renk.ENDC}")
 
-    # 2. Veritabanı (AKILLI ÖNERİ)
-    print(f"\n{Renk.BLUE}[2/5] Veritabanı Yeri...{Renk.ENDC}")
+    # Dosya çalıştırma izni (+x)
+    try:
+        current_file = os.path.abspath(sys.argv[0])
+        os.chmod(current_file, 0o755)
+    except: pass
+
+    # --- ADIM 1: KÜTÜPHANE KURULUMU (Otomatik & Zorunlu) ---
+    print(f"\n{Renk.BLUE}[1/3] Gerekli Kütüphaneler Yükleniyor...{Renk.ENDC}")
     
-    sync_path = os.path.join(os.path.expanduser('~'), 'Sync')
-    default_db = os.path.join(os.path.expanduser('~'), '.mergen_data.db')
+    # Kurulacak paket listesi (Platforma göre değişir)
+    gerekli_paketler = ["google-genai", "requests"] # Temel paketler
     
-    if os.path.exists(sync_path):
-        suggested_db = os.path.join(sync_path, 'mergen.db')
-        print(f"{Renk.GREEN}Syncthing klasörü bulundu!{Renk.ENDC}")
-        print(f"Önerilen Yol (Telefonda Eşitleme İçin): {Renk.BOLD}{suggested_db}{Renk.ENDC}")
+    if not is_termux:
+        # Masaüstü ise PyQt6 da ekle
+        gerekli_paketler.append("PyQt6")
     else:
-        suggested_db = default_db
-        print(f"Varsayılan: {default_db}")
-        
-    custom_db = input(f"{Renk.BOLD}Yol (Önerilen için Enter): {Renk.ENDC}").strip()
-    final_db_path = custom_db if custom_db else suggested_db
+        print(f"{Renk.WARNING}! Termux algılandı: PyQt6 (GUI) kurulumu atlanıyor.{Renk.ENDC}")
+
+    # Pip ile tek tek kur ve sonucu göster
+    for paket in gerekli_paketler:
+        print(f"   ⮞ {paket} kuruluyor...", end=" ", flush=True)
+        try:
+            # --disable-pip-version-check: Pip uyarılarını gizle
+            # stdout=subprocess.DEVNULL: Başarılıysa çıktı gösterme (temiz ekran)
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", paket, "--disable-pip-version-check"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print(f"{Renk.GREEN}✔ TAMAM{Renk.ENDC}")
+        except subprocess.CalledProcessError:
+            # Hata varsa detay veremiyoruz ama kullanıcıya manuel komutu gösterelim
+            print(f"{Renk.FAIL}X HATA{Renk.ENDC}")
+            print(f"     ! Lütfen manuel deneyin: pip install {paket}")
+        except Exception as e:
+            print(f"{Renk.FAIL}X{Renk.ENDC} ({e})")
+
+    print(f"{Renk.GREEN}✓ Kütüphane işlemleri tamamlandı.{Renk.ENDC}")
+
+    # --- ADIM 2: VERİTABANI (Buradan sonrası aynı kalacak) ---
+    print(f"\n{Renk.BLUE}[2/3] Veritabanı Yeri...{Renk.ENDC}")
+    print(f"Syncthing kullanıyorsanız dosya yolunu girin.")
     
-    # 3. API Key
-    print(f"\n{Renk.BLUE}[3/5] Google Gemini API Key...{Renk.ENDC}")
-    key = input(f"{Renk.BOLD}Anahtar (Enter ile atla): {Renk.ENDC}").strip()
+    custom_db = input(f"{Renk.BOLD}Yol (Varsayılan için Enter): {Renk.ENDC}").strip()
+    default_db = os.path.join(os.path.expanduser('~'), '.mergen_data.db')
+    final_db_path = custom_db if custom_db else default_db
     
-    save_config({"db_path": final_db_path, "api_key": key})
-    MergenVeritabani() # Init
+    # API Key ve AI Ayarları
+    print(f"\n{Renk.BLUE}[2/2] API Anahtarı ve Gizlilik...{Renk.ENDC}")
+    key = input(f"{Renk.BOLD}Google Gemini API Key (Enter ile atla): {Renk.ENDC}").strip()
     
-    # 3.1 AI Tercihi
-    print(f"\n{Renk.BLUE}[Opsiyonel] Gizlilik Ayarı...{Renk.ENDC}")
     ai_choice = input(f"{Renk.BOLD}Yapay Zeka analizi aktif olsun mu? (e/h) [E]: {Renk.ENDC}").strip().lower()
     ai_stat = False if ai_choice == 'h' else True
     
-    save_config({"db_path": final_db_path, "api_key": key, "ai_aktif": ai_stat})
+    save_config({"db_path": final_db_path, "api_key": sifrele(key) if key else "", "ai_aktif": ai_stat})
+    MergenVeritabani() # DB oluştur
     
-    # 4. Shell Hook
-    print(f"\n{Renk.BLUE}[4/5] Shell Entegrasyonu...{Renk.ENDC}")
-    src = os.path.abspath(sys.argv[0]); sh = os.environ.get("SHELL","").split("/")[-1]
-    rc = os.path.expanduser(f"~/.{sh}rc") if sh in ["bash","zsh"] else None
+    # 3. Sistem Entegrasyonu (Symlink) - SUDO KONTROLLÜ
+    print(f"\n{Renk.BLUE}[Son] Sistem Entegrasyonu...{Renk.ENDC}")
+    target_link = "/usr/local/bin/mergen"
     
-    if rc:
-        try:
-            with open(rc, "r") as f: content = f.read()
-            if "mergen_track" not in content:
-                with open(rc, "a") as f: f.write(f'\nmergen_track() {{ /usr/bin/python3 {src} --track "$(fc -ln -1)" &! }}\nautoload -Uz add-zsh-hook; add-zsh-hook precmd mergen_track\n' if sh=="zsh" else f'\nmergen_track() {{ /usr/bin/python3 {src} --track "$(history 1 | sed \'s/^[ ]*[0-9]\\+[ ]*//\')" &>/dev/null & }}\nexport PROMPT_COMMAND="mergen_track; $PROMPT_COMMAND"\n')
-                print(f"{Renk.GREEN}✓ Hook eklendi: {rc}{Renk.ENDC}")
-            else: print(f"{Renk.WARNING}! Zaten ekli.{Renk.ENDC}")
-        except: print(f"{Renk.FAIL}! Shell dosyasına yazılamadı.{Renk.ENDC}")
+    try:
+        # Önce varsa eskisini sil
+        if os.path.islink(target_link) or os.path.exists(target_link):
+            os.remove(target_link)
+        
+        os.symlink(current_file, target_link)
+        print(f"{Renk.GREEN}✓ 'mergen' komutu başarıyla oluşturuldu!{Renk.ENDC}")
+    except PermissionError:
+        print(f"{Renk.FAIL}X Yetki Hatası! (Sudo gerekiyor){Renk.ENDC}")
+        print("Lütfen şu komutu kopyalayıp çalıştırın:")
+        print(f"\n    {Renk.CYAN}sudo ln -sf {current_file} {target_link}{Renk.ENDC}\n")
+    except Exception as e:
+        print(f"{Renk.FAIL}X Hata: {e}{Renk.ENDC}")
 
-    # 5. Symlink
-    print(f"\n{Renk.BLUE}[5/5] Sistem Komutu Oluşturuluyor...{Renk.ENDC}")
-    try: 
-        if not os.path.exists("/usr/local/bin/mergen"): os.symlink(src, "/usr/local/bin/mergen")
-        print(f"{Renk.GREEN}✓ 'mergen' komutu eklendi.{Renk.ENDC}")
-    except: 
-        print(f"{Renk.FAIL}X Yetki hatası! Manuel çalıştırın:{Renk.ENDC}")
-        print(f"sudo ln -s {src} /usr/local/bin/mergen")
-
-    print(f"\n{Renk.GREEN}=== KURULUM TAMAMLANDI ==={Renk.ENDC}")
-    print("Lütfen terminali kapatıp yeniden açın.")
+    print(f"\n{Renk.GREEN}=== KURULUM BİTTİ ==={Renk.ENDC}")
+    print("Terminali kapatıp yeniden açın.")
 
 def main():
     p = argparse.ArgumentParser()
