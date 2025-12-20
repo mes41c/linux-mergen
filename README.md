@@ -1,6 +1,6 @@
 🦅 MERGEN: The Cyberdeck Command Center
 
-    "Unutulan her komut, kaybedilen zamandır. Mergen, hackerlar için tasarlanmış merkeziyetsiz, yapay zeka destekli ikinci beyninizdir."
+    "Unutulan her komut, kaybedilen zamandır. Mergen, siber güvenlik uzmanları için tasarlanmış merkeziyetsiz, yapay zeka destekli ikinci beyninizdir."
 
 Mergen, siber güvenlik uzmanları ve sistem yöneticileri için geliştirilmiş; CLI, GUI ve TUI arayüzlerine sahip, uçtan uca şifreli senkronizasyon destekleyen yeni nesil bir komut yönetim sistemidir.
 
