@@ -1,115 +1,144 @@
-# 🦅 MERGEN - AI-Powered Cyber Operations Assistant
+🦅 MERGEN: The Cyberdeck Command Center
 
-![Mergen Banner](https://via.placeholder.com/1200x300/121212/00ff9d?text=MERGEN+-+CYBER+OPERATIONS+CENTER)
+    "Unutulan her komut, kaybedilen zamandır. Mergen, hackerlar için tasarlanmış merkeziyetsiz, yapay zeka destekli ikinci beyninizdir."
 
-> **"Terminalinizin İkinci Beyni."**
+Mergen, siber güvenlik uzmanları ve sistem yöneticileri için geliştirilmiş; CLI, GUI ve TUI arayüzlerine sahip, uçtan uca şifreli senkronizasyon destekleyen yeni nesil bir komut yönetim sistemidir.
 
-**Mergen**, siber güvenlik uzmanları, sızma testi uzmanları (pentesters) ve sistem yöneticileri için tasarlanmış, **Yapay Zeka (Google Gemini)** destekli, **OpSec (Operasyonel Güvenlik)** odaklı bir terminal asistanı ve komut yönetim merkezidir.
+Karmaşık nmap, ffmpeg veya kubectl komutlarını bir kez yazın, Mergen maskelesin, saklasın ve tüm cihazlarınıza (PC & Mobil) ışınlasın.
+🌟 Öne Çıkan Özellikler
+🛡️ Paranoyak Güvenlik (OpSec First)
 
-Sadece komutlarınızı saklamakla kalmaz; onları analiz eder, kullanım alışkanlıklarınızdan profesyonel yetkinlik profilinizi çıkarır ve terminal geçmişinizi (history) arka planda otomatik olarak öğrenir.
+    Otomatik Maskeleme: Komutların içindeki Şifreler, API Anahtarları ve IP Adresleri (IPv4) veritabanına kaydedilmeden önce otomatik olarak <GIZLI_KEY_1> veya <GIZLI_IP_0> şeklinde maskelenir.
 
----
+    XSS & Injection Koruması: Tüm girdiler HTML Escape işleminden geçer ve SQL parametreleri ile izole edilir.
 
-## ⚡ Özellikler
+    Gizlilik Modu: Tek tıkla AI analizini kapatarak "Air-Gapped" mantığında çalışabilirsiniz.
 
-### 🧠 1. Yapay Zeka Entegrasyonu (Intelligence)
-* **Doğal Dil İşleme:** "80. portu kullanan servisi nasıl bulurum?" gibi soruları saniyeler içinde çalıştırılabilir, parametreleri optimize edilmiş Linux komutlarına dönüştürür.
-* **Otomatik Ayrıştırma:** AI cevabından saf komutu, teknik açıklamayı ve kategoriyi (Network, Docker, System vb.) otomatik olarak ayıklar ve veritabanına işler.
-* **Kariyer Koçu (Profilim):** Komut geçmişinizi analiz ederek siber güvenlik yetkinlik profilinizi, güçlü/zayıf yönlerinizi ve odaklandığınız alanları (Red Team, Blue Team vb.) raporlar.
+🧠 Yerel + Yapay Zeka Hibrit Yapı
 
-### 🛡️ 2. Paranoyak Güvenlik (The Sanitizer)
-* **Veri Maskeleme:** AI servisine gönderilen tüm verilerde IP adresleri, E-postalar, Şifreler ve API Anahtarları otomatik olarak `<GIZLI_VERI>` etiketleriyle maskelenir (Regex Sanitization).
-* **Yerel Veritabanı:** Tüm veriler `~/.mergen_data.db` içinde şifrelenmemiş (ancak tamamen yerel) SQLite veritabanında tutulur. Dışarıya (Google API hariç) veri sızdırılmaz.
-* **Kill Switch (Veri İmhası):** Acil durumlar için tek tıkla tüm veritabanını, geçmişi ve analizleri kalıcı olarak imha etme (Factory Reset) özelliği.
+    Offline First: İnternet olmasa bile veritabanınız yereldir, anında çalışır.
 
-### 👁️ 3. Silent Observer (Otomatik Takip)
-* **Shell Hook Entegrasyonu:** Zsh, Bash ve Fish kabuklarına entegre olur. Terminalde yazdığınız her komutu (Mergen kapalıyken bile) arka planda yakalar ve veritabanına "Shell Geçmişi" olarak işler.
-* **Frekans Analizi:** Hangi komutu kaç kere kullandığınızı takip eder ve "Sık Kullanılanlar" listenizi otomatik oluşturur.
+    Gemini AI Entegrasyonu: Komutlarınızın ne işe yaradığını analiz eder veya doğal dille sorduğunuz soruları ("En sessiz nmap taraması nedir?") çalıştırılabilir komutlara çevirir.
 
-### 💻 4. Hibrit Arayüz (CLI & GUI)
-* **Terminal-First:** Hız için doğrudan terminalden sorgu yapın: `mergen "sorgu"`
-* **Cyberpunk GUI:** Detaylı analiz, düzenleme, filtreleme, yedekleme ve görselleştirme için PyQt6 tabanlı, karanlık temalı modern arayüz.
+📱 Decentralized Mobile Ops (Termux + Syncthing)
 
----
+    Merkezi sunucu yok. Bulut yok.
 
-## 🚀 Kurulum
+    Syncthing ile P2P şifreli veri eşitleme.
 
-Mergen, kurulumu ve sistem entegrasyonunu otomatize eden akıllı bir sihirbaz ile gelir.
+    Tailscale ile dünyanın her yerinden evdeki makinenize güvenli tünel.
 
-### Gereksinimler
-* Python 3.8+
-* Linux Ortamı (Kali Linux, Ubuntu, Debian, Arch, Fedora vb.)
-* Google Gemini API Anahtarı ([Buradan Ücretsiz Alın](https://aistudio.google.com/app/apikey))
+    Android (Termux) üzerinde çalışan TUI (Terminal User Interface) ile cebinizdeki telefonu bir Cyberdeck'e dönüştürün.
 
-### Hızlı Kurulum
+🏗️ Mimari
 
-1.  **Depoyu Klonlayın:**
-    ```bash
-    git clone https://github.com/mes41c/linux-mergen.git
-    cd mergen
-    ```
+Mergen, "Decentralized Hybrid Cloud" mimarisini kullanır:
+Kod snippet'i
 
-2.  **Kurulum Sihirbazını Başlatın:**
-    ```bash
-    python3 mergen.py --setup
-    ```
-    *Bu komut:*
-    * *Gerekli kütüphaneleri (google-genai, PyQt6) kurar.*
-    * *Veritabanını oluşturur.*
-    * *Kullandığınız Shell'i (Zsh/Bash) algılar ve otomatik takip kancasını ekler.*
-    * *API Anahtarınızı sorar ve güvenli bir şekilde kaydeder.*
-    * *`mergen` komutunu sisteme (symlink) ekler.*
+graph TD
+    A[KALI LINUX (Ana Üs)] -- Syncthing (P2P Sync) --> B((Veri Havuzu));
+    C[ANDROID / TERMUX (Saha)] -- Syncthing (P2P Sync) --> B;
+    
+    A -- Tailscale (VPN) --> C;
+    
+    subgraph "Mergen Core"
+    D[SQLite DB]
+    E[Python Backend]
+    F[AI Engine (Optional)]
+    end
 
-3.  **Terminali Yeniden Başlatın:**
-    Değişikliklerin aktif olması için terminali kapatıp açın.
+🚀 Kurulum
+1. Linux (Kali/Ubuntu/Debian) - Ana Makine
+Bash
 
----
+# Repoyu klonlayın
+git clone https://github.com/kullaniciadi/mergen.git
+cd mergen
 
-## 📖 Kullanım
+# Kurulum sihirbazını başlatın
+python3 mergen.py --setup
 
-### 1. Terminalden Hızlı Sorgu (CLI)
-Bir komuta ihtiyacınız olduğunda arayüzü açmanıza gerek yok:
+Sihirbaz gerekli kütüphaneleri (PyQt6, google-genai) kuracak ve mergen komutunu sisteminize ekleyecektir.
+2. Android (Termux) - Mobil Operasyon
 
-```bash
-mergen "tüm docker containerları sil ama volume'ler kalsın"
-**Çıktı:** Komutu, risk analizini ve açıklamayı terminale renkli olarak basar ve veritabanına kaydeder.
+Mobil kurulum, Android'in güvenlik kısıtlamalarını aşmak için özel bir yöntem kullanır.
 
-### 2. Grafik Arayüz (GUI)
+    Ön Hazırlık:
 
-Veritabanını yönetmek, düzenlemek ve analizler için:
+        Telefona Termux ve Syncthing uygulamalarını kurun.
 
-```bash
+        PC ve Telefon arasında Syncthing eşitlemesini yapın (Klasör: ~/Download/Mergen önerilir).
+
+        mergen.py ve mergen.db dosyalarının telefona geldiğinden emin olun.
+
+    Termux Ayarları:
+    Bash
+
+# Gerekli paketler
+pkg update && pkg upgrade
+pkg install python rust binutils build-essential clang
+
+# AI Kütüphanesi (Derleme biraz sürebilir)
+pip install google-genai
+
+# Dosya izni ver
+termux-setup-storage
+
+Mergen Kurulumu (Wrapper):
+Bash
+
+    # Klasöre git (Syncthing yolunuz)
+    cd /storage/emulated/0/Download/Mergen
+
+    # Kurulumu başlat
+    python mergen.py --setup
+
+    # Android "noexec" kısıtlamasını aşmak için Wrapper oluştur
+    # (Bu komutu tek seferde yapıştırın)
+    echo 'python /storage/emulated/0/Download/Mergen/mergen.py "$@"' > $PREFIX/bin/mergen && chmod +x $PREFIX/bin/mergen
+
+💻 Kullanım Kılavuzu
+1. Grafik Arayüz (GUI) - Masaüstü
+Bash
+
 mergen --ui
-```
 
-Canlı Arama: Regex destekli anlık filtreleme.
+    Dashboard: Tüm komutları filtreleyin, düzenleyin.
 
-Düzenleme: Komutlara veya açıklamalara çift tıklayarak içeriği değiştirin.
+    Geçmiş Yükle: Sızma testi makinelerinizden .zsh_history veya .bash_history dosyalarını seçerek toplu analiz yapın.
 
-Sıralama: ID, Kullanım Sayısı veya Tarih başlıklarına tıklayarak sıralama yapın.
+    AI Analiz: "Profilim" butonu ile yetkinliklerinizi analiz ettirin.
 
-Profilim: "🧠 Profilim" butonuna tıklayarak yapay zekanın sizi analiz etmesini sağlayın.
+2. Terminal Arayüzü (TUI) - Mobil & SSH
+Bash
 
-Veri Yönetimi: Sağ üstteki butonlarla verilerinizi JSON formatında yedekleyin veya geri yükleyin.
+mergen --tui
 
-3. Otomatik Takip
+    Fare gerektirmez. Klavye ile tam kontrol.
 
-Kurulumdan sonra hiçbir şey yapmanıza gerek yok. Terminalde çalıştırdığınız araçlar (nmap, sqlmap, burpsuite, ssh vb.) otomatik olarak yakalanır ve "Shell Geçmişi" kategorisine kaydedilir.
+    Hacker estetiğine sahip renkli arayüz.
 
-🛠️ Teknoloji Yığını
+    / tuşu ile Regex destekli arama.
 
-    Core: Python 3
+3. Hızlı Komut (CLI)
+Bash
 
-    Database: SQLite3 (Otomatik Migrasyonlu)
+# Soru sor, komut al
+mergen "bütün portları tara ama firewall'a takılma"
 
-    AI Model: Google Gemini 3 Flash
+# History dosyasını terminalden yükle
+mergen --import-history /path/to/.zsh_history
 
-    GUI: PyQt6 (Qt Framework)
+⚙️ Yapılandırma & Güvenlik
 
-    Shell Integration: Zsh / Bash / Fish Hooks (Native implementation)
+Ayarlar ~/.mergen_config.json dosyasında saklanır.
+
+    API Key: Google Gemini API anahtarınız base64 tabanlı bir karmaşıklaştırma (obfuscation) ile saklanır.
+
+    AI Toggle: GUI üzerindeki "🤖 AI" kutucuğunu kaldırarak tüm dış veri trafiğini kesebilirsiniz.
 
 ⚠️ Yasal Uyarı
 
-Bu araç, siber güvenlik profesyonellerine ve öğrencilerine yardımcı olmak, operasyonel verimliliği artırmak amacıyla geliştirilmiştir. Oluşturulan komutların (özellikle sistem dosyalarını etkileyenlerin) çalıştırılmadan önce kontrol edilmesi kullanıcının sorumluluğundadır. Geliştirici, aracın kullanımından doğabilecek veri kayıplarından sorumlu değildir.
+Bu araç, siber güvenlik profesyonellerinin operasyonel verimliliğini artırmak için tasarlanmıştır. Elde edilen komutların yasa dışı amaçlarla kullanılmasından kullanıcı sorumludur.
 
-Lisans: MIT License
+<p align="center"> <sub>Developed by <b>MES</b> | "Code is Poetry, Security is Art."</sub> </p>
