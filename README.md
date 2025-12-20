@@ -52,7 +52,7 @@ graph TD
 Bash
 
 # Repoyu klonlayın
-git clone https://github.com/kullaniciadi/mergen.git
+git clone https://github.com/mes41c/mergen.git
 cd mergen
 
 # Kurulum sihirbazını başlatın
